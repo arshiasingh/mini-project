@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<title>ANLY501 Project</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<style>
+body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
+.w3-third img{margin-bottom: -6px; opacity: 0.8; cursor: pointer}
+.w3-third img:hover{opacity: 1}
+</style>
+<body class="w3-light-grey w3-content" style="max-width:1600px">
+
+<!-- Sidebar/menu -->
+<nav class="w3-sidebar w3-bar-block w3-white w3-animate-left w3-text-grey w3-collapse w3-top w3-center" style="z-index:3;width:300px;font-weight:bold" id="mySidebar"><br>
+  <h3 class="w3-center"><b>Mini-Project</b></h3>
+  <h5 class="w3-center">Melissa Collier, Norman Hong, Jingjing Lin, Yeqing Liu,<br> Xiner Ning, Arshia Singh</h5>
+  <br><br><br>
+  <a href="javascript:void(0)" onclick="w3_close()" class="w3-bar-item w3-button w3-padding w3-hide-large">CLOSE</a>
+  <a href="#" onclick="w3_close()" class="w3-bar-item w3-button">Introduction</a>
+  <a href="#clean" onclick="w3_close()" class="w3-bar-item w3-button">Data Collection, Cleaning, & Normalization</a>
+  <a href="#hyp" onclick="w3_close()" class="w3-bar-item w3-button">Hypotheses</a>
+  <a href="#h1" onclick="w3_close()" class="w3-bar-item w3-button">Results: Hypothesis 1</a>
+  <a href="#h2" onclick="w3_close()" class="w3-bar-item w3-button">Results: Hypothesis 2</a>
+  <a href="#h3" onclick="w3_close()" class="w3-bar-item w3-button">Results: Hypothesis 3</a>
+  <a href="#conclusion" onclick="w3_close()" class="w3-bar-item w3-button">Conclusion</a>
+</nav>
+
+<!-- Top menu on small screens -->
+<header class="w3-container w3-top w3-hide-large w3-white w3-xlarge w3-padding-16">
+  <span class="w3-left w3-padding">Where should you live for your health?</span>
+  <a href="javascript:void(0)" class="w3-right w3-button w3-white" onclick="w3_open()">☰</a>
+</header>
+
+<!-- Overlay effect when opening sidebar on small screens -->
+<div class="w3-overlay w3-hide-large w3-animate-opacity" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
+
+<!-- !PAGE CONTENT! -->
+<div class="w3-main" style="margin-left:300px">
+
+  <!-- Push down content on small screens --> 
+  <div class="w3-hide-large" style="margin-top:83px"></div>
+  
+  <!-- Introduction -->
+  <div class="w3-container w3-dark-grey w3-text-light-grey w3-padding-32 w3-padding-large" id="#">
+    <div class="w3-content" style="max-width:600px">
+      <h4 class="w3-center"><b>Introduction</b></h4>
+      <p>This is an investigation into how an individual’s choice in residence may impact their health. Cancer rates are the main parameter to determine the overall health of each county in the United States. Cancer is currently the second leading cause of death in the nation, the causes of which have been linked to many poor health choices, including environmental factors, making it a very good indicator of the health of populations.  A dataset from the NIH that includes cancer type, demographic information, and location for each across the United States is used for this analysis. Two additional datasets describe the environmental status of each county in the United States. Air quality datasets were gathered from the Environmental Protection Agency that shows air quality indexes for common air pollutants such as NO2, O3, and CO. Additionally, a water quality dataset was gathered from the Center for Disease Control (CDC) to observe the heavy metal contaminants in the drinking water sources for each county. These three datasets can describe a basic picture of each US County’s environment, and how this environment might be correlated with cancer rates.</p>
+    </div>
+  </div>
+
+  <!-- Modal for full size images on click-->
+  <div id="modal01" class="w3-modal w3-black" style="padding-top:0" onclick="this.style.display='none'">
+    <span class="w3-button w3-black w3-xlarge w3-display-topright">×</span>
+    <div class="w3-modal-content w3-animate-zoom w3-center w3-transparent w3-padding-64">
+      <img id="img01" class="w3-image">
+      <p id="caption"></p>
+    </div>
+  </div>
+
+  <!-- Data Cleaning and Normalization -->
+  <div class="w3-container w3-light-grey w3-padding-32 w3-padding-large" id="clean">
+    <div class="w3-content" style="max-width:900px">
+      <h4 class="w3-center"><b>Data Collection, Cleaning, & Normalization</b></h4>
+      <p>Cancer rates across the United States were obtained through an NIH dataset. The datawas relatively clean but some edits were made for analysis.   Symbols that existed in some columns were converted to nan values, the index column was removed, and the “County” column was broken into four separate columns: State, County, SEER Registry Number, and NPCR Registry Number. Additionally, all the numerical columns that were imported as strings were removed and converted to numeric values for analysis.</p>
+	  <p>In the histogram below ‘Average Annual Count’ shows a few hundred observations having average annual count of more than 2500, which are possibly outliers. In order to confirm whether these observations are outliers, a subset from cancer data with an average annual count of more than 2500 was created. A large number of such observations are from California, New York and so on. All other variables were normal. Therefore, these variables were not removed as they could contain valuable information in analysis.</p>
+	  <div class="w3-center" style="max-width:900px">
+        <img src="/ANLY501/images/clean1.png" class="w3-image w3-padding-32 w3-center" width="600" height="650" onclick="onClick(this)" alt="Average Annual Count">
+      </div>
+      <p>Air quality scores were obtained from the Environmental Protection Agency for each county in the United States. This data was also relatively clean but edits were made for the purpose of analysis.</p>
+      <p>In order to join this dataset with other datasets, the FIPS county and state codes were added to this data frame. To do this, each county string was cleaned to match with the county string in the FIPS county code data frame so that the county and state codes could be easily added. There were no null values that needed to be removed, although outliers were present and discussed below.</p>
+      <p>Next, the numerical values were normalized into proportions. Since the Air Quality Index was not recorded for the same amount of days for every county, the “Good”, “Moderate”, “Unclean”, etc days columns needed to be divided by the number of days AQI was recorded (“Days with AQI”), so that these records could be compared to each other.  This also applied to the “Days CO2”, “Days O3” etc. columns, in which the pollutant mentioned was the primary pollutant for the number of days specified. These columns were added to the data frame as “Previouscolumnname_Norm”. For example: “Good Days_Norm”.</p>
+      <p>When checking for outliers in the numerical data of the air dataset, many outliers were found by using boxplots. The 'Good Days_Norm', 'Moderate Days_Norm',  ‘Unhealthy for Sensitive Groups Days_Norm’, Unhealthy Days_Norm”, ‘Very Unhealthy Days_Norm’, ‘Hazardous Days_Norm’ and 'Max AQI' all showed outliers, but for each column except ‘Max AQI” these outliers were left and deemed “extremes” for each column.  However, as the “Max AQI columns contained values above 500, which is the max AQI score, these records were completely removed from the data frame (Figure 2).</p>
+      <div class="w3-center" style="max-width:900px">
+        <img src="/ANLY501/images/clean2.png" class="w3-image w3-padding-32 w3-center" width="600" height="650" onclick="onClick(this)" alt="Boxplot grouped by Year">
+      </div>
+      <p>Water quality data for each county was collected through data from the Center for Disease Control. This dataset was relatively clean, but edits were made for the purpose of analysis. The “Location” column was split into a “county” and a “state” column.  Additionally, columns such as “geoAbbreviation” and “geoID” were redundant and only one was kept.  The water quality mean was also binned into 3 categories: “No pollution detected”, “detected but no harm”, and “detected and harmful.” After cleaning, the “result” data frame was used for analysis and contained only 6 columns with pertinent information for analysis. Overall, there were no missing values found after checking each column with .isna(), value_counts and unique() functions in the original dataset during Part 1 data processing stage.</p>
+      <p>For the water quality dataset, there is only one numeric column: ‘value’ (level of Arsenic concentration). According to the CDC’s documents, lowering the minimum contaminant load (MCL) from 50 to 10 ppb statistically reduces bladder and lung cancer mortality and morbidity by 37-56 cancers a year in the U.S. (EPA 2001b). Therefore, outliers can not be examined and defined only by applying boxplot function (left in Figure 3).  Though there are some points out side of the IQR box, but they should not be considered outliers, because there are many zeros in the dataset and these zeros cause the IQR lie at the bottom. Therefore, these points should be considered normal points within a reasonable range. As a second way to test for outliers, ‘Values’ were binned into three groups, and a histogram created to show the frequency of each group. The results of the two figures indicate that there were no outliers in the water quality dataset.</p>
+      <p>Finally, some values in the dataset were binned to assist with analysis. As mentioned before, the level of Arsenic concentration (water quality indicator) was binned into three groups: “No pollution detected”, “detected but no harm”, and “detected and harmful” by considering the CDC official guide (right in Figure 3). For examining this new binned column, “sum([the binned column]).isna())” code was applied, showing a result of “0”.  Therefore, there were no missing values binned.</p>
+      <div class="w3-center" style="max-width:900px">
+        <img src="/ANLY501/images/clean3.png" class="w3-image w3-padding-32 w3-center" width="600" height="650" onclick="onClick(this)" alt="MCL Value Data">
+      </div>
+    </div>
+  </div>
+  
+  <!-- Hypotheses -->
+  <div class="w3-container w3-grey w3-padding-32 w3-padding-large" id="hyp">
+    <div class="w3-content" style="max-width:900px">
+      <h4 class="w3-center"><b>Hypotheses</b></h4>
+      <p>Hypothesis 1</p>
+      <p>“We expect that as air quality gets worse, the cancer rates in each county will increase.  We also expect this effect to be most significant among lung cancer rates.”</p>
+      <p>Hypothesis 2</p>
+      <p>“We expect that as water quality decreases, cancer rates in each county will increase.”</p>
+      <p>Hypothesis 3</p>
+      <p>“The air and water quality scores in each county can be used as predictors for that specific county’s cancer rate (the average number of individuals affected with cancer in each county over a five year period).”</p>
+    </div>
+  </div>
+
+  <!-- Hypothesis 1 -->
+  <div class="w3-container w3-light-grey w3-padding-32 w3-padding-large" id="h1">
+    <div class="w3-content" style="max-width:900px">
+        <h4 class="w3-center"><b>Hypothesis 1</b></h4>
+        <p class="w3-center">“We expect that as air quality gets worse, the cancer rates in each county will increase.  We also expect this effect to be most significant among lung cancer rates.”</p>
+        <div class="w3-center" style="max-width:900px">
+        <img src="/ANLY501/images/scatter.png" class="w3-image w3-padding-32 w3-center" width="600" height="650" onclick="onClick(this)" alt="Lung Cancer Counts by AQI Score">
+      </div>
+        <p>The overall trend in the United States shows that as the median AQI score increases (air quality gets worse) the cancer rates also increase. However, there are some unique outliers that show low cancer rates in counties with very high AQI scores.  From these results, it is possible that type of pollutant might matter when examining cancer rates realted to air quality scores, as well as the population of the county. For example, the two-circled counties have similar air quality, but their average lung cancer counts are very different. It turns out the one at the bottom is Tulare County, which is ranked the sixth most ozone-polluted county in the US. So people are more likely to get lung cancer. The one at the top is Los Angeles County.  Additionally, the reason that LA county seems to have higher average lung cancer counts is LA County has 20 times more population than that of Tulare county. If a normalized lung cancer rate is calculated by dividing the cancer counts by the population, lung cancer count per person for Tulare County is 0.01% higher.</p>
+        <p>In contrast with this theory however, the following is a bar plot that compares the number of days with particulate matter less than 10 micrometers but above 2.5 micrometers, number of days with particulate matter less than 2.5 micrometers, and the age adjusted cancer incidence rate per 1,000,000 cases, for each state. The figure shows that even for large variations in the number of days with particulate matter smaller than 10 or 2.5 micrometers, the age adjusted incidence rate does not fluctuate much. It seems that the cancer rate is relatively the same across multiple states.</p>
+        <iframe src = "/ANLY501/images/bar_plot1.html" width = "900" height = "700">
+         Sorry your browser does not support inline frames.
+        </iframe>
+        <p>However, a possible problem is that some states did not collect AQI data for every day of the year. For example, some states collected data only 160 days out of 365 days. Because of this, another bar plot was created to compare median AQI and age adjusted cancer incidence rate per 1,000,000 cases. The plot does not show any noticeable patterns.</p>
+        <iframe src = "/ANLY501/images/bar_plot_2.html" width = "900" height = "700">
+         Sorry your browser does not support inline frames.
+        </iframe>
+    </div>
+  </div>
+
+  <!-- Hypothesis 2 -->
+  <div class="w3-container w3-grey w3-padding-32 w3-padding-large" id="h2">
+    <div class="w3-content" style="max-width:900px">
+      <h4 class="w3-center"><b>Hypothesis 2</b></h4>
+      <p class="w3-center">“We expect that as water quality decreases, cancer rates in each county will increase.”</p>
+      <div class="w3-center" style="max-width:900px">
+      <img src="/ANLY501/images/jj1.png" class="w3-image w3-padding-32 w3-center" width="600" height="650" onclick="onClick(this)" alt="High Arsenic Level Area Trend.">
+      </div>
+      <p>This graph presents the arsenic level trend in counties with 10mg/L arsenic level from 2011 – 2015. Some counties only had bad water quality in a specific year, while other counties suffered bad water quality in all years examined.</p>
+      <p>Based on these mixed results, a linear regression was applied to explore the relationship between water quality and cancer rate. The scatterplot (Fig1) shows arsenic content against cancer rate, and the red line in the plot describes the equation of linear regression: cancer rate=-4.91*arsenic content+456.85, which means that cancer rate would decline if water quality decreases. As Fig1 shows, the arsenic content of most points lay from 0 to 10µg/L. However, these points at low arsenic level between 0 and 10µg/L are not so meaningful for exploring the relationship between water quality and cancer rate. According to the research, “Long term exposure to drinking water containing arsenic at levels higher than 10 ppb increases the chances of getting cancer; for lower levels the chances are less.”(1) We define water containing arsenic at level above 10µg/L as harmful water. Therefore, these high cancer rates at low arsenic level should be explained by factors other than water quality, such as stress, bad living habits, etc. Hence, focusing on harmful water (arsenic content>=10µg/L) would be more representative. As a result, Fig2 shows a positive correlation between the arsenic content and cancer incidence, and the regression equation is cancer rate =2.72* arsenic content +375. In conclusion, for harmful water, the worse the water quality is, the higher cancer rate is.</p>
+      <div class="w3-center" style="max-width:900px">
+      <img src="/ANLY501/images/linreg1.png" class="w3-image w3-padding-32 w3-center" width="600" height="650" onclick="onClick(this)" alt="Scatterplot of overall arsenic content against cancer rate."><br>
+      <i>Scatterplot of overall arsenic content against cancer rate.</i><br>
+      </div>
+      <div class="w3-center" style="max-width:900px">
+      <img src="/ANLY501/images/linreg2.png" class="w3-image w3-padding-32 w3-center" width="600" height="650" onclick="onClick(this)" alt="Scatterplot of harmful water against cancer rate."><br>
+      <i>Scatterplot of harmful water against cancer rate.</i>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hypothesis 3 -->
+  <div class="w3-container w3-light-grey w3-padding-32" id="h3">
+    <h4 class="w3-center"><b>Hypothesis 3</b></h4>
+    <div class="w3-content" style="max-width:900px">
+    <p class="w3-center">“The air and water quality scores in each county can be used as predictors for that specific county’s cancer rate (the average number of individuals affected with cancer in each county over a five year period).”</p>
+    <div class="w3-center" style="max-width:900px">
+      <img src="/ANLY501/images/jj2.png" class="w3-image w3-padding-32 w3-center" width="600" height="650" onclick="onClick(this)" alt="Cancer trend and PM2.5 days for high arsenic level areas."><br>
+    </div>
+    <p>Since only certain counties were considered to have a dangerous amount of arsenic in the water content, we first graphed the annual cancer trend for each of these counties (left figure).  This figure showed that the cancer trends were mostly falling in counties with dangerous arsenic content, which was a surprising result. We then wanted to determine if these counties had unusually high amounts of particulate matter (above 2.5) to see if there was a trend in poor water quality and poor air quality. In this case, the majority of the counties spent over 100 days of the year with high amounts of particulate matter in the air.  Therefore, we can conclude that counties with poor water quality also have poor air quality. From these results, it was determined that air quality was likely a better predictor of cancer rates in the US than water quality. To further test this theory, we performed machine learning techniques, created maps, and ran network and clustering analyses.</p>
+    <p> The machine learning algorithm K Nearest Neighbor (KNN) was used to test how well water and air quality predict cancer rates for each county using the following labels: (0-25%, 25-50%, 50-75%, and 75-100%).</p>
+    <p>The KNN algorithm used the three datasets and classified “new” data points based on a similarity measure. The classification was done by a majority vote to its neighbors. The accuracy results of using air and water quality scores as a predictor for the average number of individuals with cancer in each county for KNN was: 0.66.  When only air quality was considered, KNN did even better with an accuracy score of 78%.</p>
+    <p>Based on the machine learning results, maps were created to see if trends could be visualized for the counties in the United States. The following maps show cancer rates and environmental indicators. The age-adjusted incidence rate is displayed in the filled counties; the darker red a county is, the higher the cancer rate per 100,000 in population. The dots on top of the counties indicate the environmental indicators, from arsenic levels in the water to air indicators like ozone and PM10. The user may also toggle between various cancer groups using the filter to the right of each map; the default is total cancer rate for the population but there are also age groups, ethnicity, gender, and specific cancer types to choose from. On these maps, any counties lacking either cancer data or environmental indicators are null, or empty.</p>
+    </div>
+    <p class="w3-center">Arsenic Map</p>
+    <div class='tableauPlaceholder' id='viz1544391575132' style='position: relative'><noscript><a href='#'><img alt=' ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Ca&#47;CancerMaps&#47;Arsenic&#47;1_rss.png' style='border: none' /></a></noscript><object class='tableauViz'  style='display:none;'><param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> <param name='embed_code_version' value='3' /> <param name='site_root' value='' /><param name='name' value='CancerMaps&#47;Arsenic' /><param name='tabs' value='no' /><param name='toolbar' value='yes' /><param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Ca&#47;CancerMaps&#47;Arsenic&#47;1.png' /> <param name='animate_transition' value='yes' /><param name='display_static_image' value='yes' /><param name='display_spinner' value='yes' /><param name='display_overlay' value='yes' /><param name='display_count' value='yes' /></object></div>                <script type='text/javascript'>                    var divElement = document.getElementById('viz1544391575132');                    var vizElement = divElement.getElementsByTagName('object')[0];                    vizElement.style.width='100%';vizElement.style.height=(divElement.offsetWidth*0.75)+'px';                    var scriptElement = document.createElement('script');                    scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';                    vizElement.parentNode.insertBefore(scriptElement, vizElement);                </script>
+    <p class="w3-center">Median AQI Map</p>
+    <div class='tableauPlaceholder' id='viz1544391586915' style='position: relative'><noscript><a href='#'><img alt=' ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Ca&#47;CancerMaps&#47;MedianAQI&#47;1_rss.png' style='border: none' /></a></noscript><object class='tableauViz'  style='display:none;'><param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> <param name='embed_code_version' value='3' /> <param name='site_root' value='' /><param name='name' value='CancerMaps&#47;MedianAQI' /><param name='tabs' value='no' /><param name='toolbar' value='yes' /><param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Ca&#47;CancerMaps&#47;MedianAQI&#47;1.png' /> <param name='animate_transition' value='yes' /><param name='display_static_image' value='yes' /><param name='display_spinner' value='yes' /><param name='display_overlay' value='yes' /><param name='display_count' value='yes' /></object></div>                <script type='text/javascript'>                    var divElement = document.getElementById('viz1544391586915');                    var vizElement = divElement.getElementsByTagName('object')[0];                    vizElement.style.width='100%';vizElement.style.height=(divElement.offsetWidth*0.75)+'px';                    var scriptElement = document.createElement('script');                    scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';                    vizElement.parentNode.insertBefore(scriptElement, vizElement);                </script>
+    <p class="w3-center">Days CO Norm Map</p>
+    <div class='tableauPlaceholder' id='viz1544391598821' style='position: relative'><noscript><a href='#'><img alt=' ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Ca&#47;CancerMaps&#47;DaysCONorm&#47;1_rss.png' style='border: none' /></a></noscript><object class='tableauViz'  style='display:none;'><param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> <param name='embed_code_version' value='3' /> <param name='site_root' value='' /><param name='name' value='CancerMaps&#47;DaysCONorm' /><param name='tabs' value='no' /><param name='toolbar' value='yes' /><param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Ca&#47;CancerMaps&#47;DaysCONorm&#47;1.png' /> <param name='animate_transition' value='yes' /><param name='display_static_image' value='yes' /><param name='display_spinner' value='yes' /><param name='display_overlay' value='yes' /><param name='display_count' value='yes' /></object></div>                <script type='text/javascript'>                    var divElement = document.getElementById('viz1544391598821');                    var vizElement = divElement.getElementsByTagName('object')[0];                    vizElement.style.width='100%';vizElement.style.height=(divElement.offsetWidth*0.75)+'px';                    var scriptElement = document.createElement('script');                    scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';                    vizElement.parentNode.insertBefore(scriptElement, vizElement);                </script>
+    <p class="w3-center">Days NO2 Norm Map</p>
+    <div class='tableauPlaceholder' id='viz1544391611120' style='position: relative'><noscript><a href='#'><img alt=' ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Ca&#47;CancerMaps&#47;DaysNO2Norm&#47;1_rss.png' style='border: none' /></a></noscript><object class='tableauViz'  style='display:none;'><param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> <param name='embed_code_version' value='3' /> <param name='site_root' value='' /><param name='name' value='CancerMaps&#47;DaysNO2Norm' /><param name='tabs' value='no' /><param name='toolbar' value='yes' /><param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Ca&#47;CancerMaps&#47;DaysNO2Norm&#47;1.png' /> <param name='animate_transition' value='yes' /><param name='display_static_image' value='yes' /><param name='display_spinner' value='yes' /><param name='display_overlay' value='yes' /><param name='display_count' value='yes' /></object></div>                <script type='text/javascript'>                    var divElement = document.getElementById('viz1544391611120');                    var vizElement = divElement.getElementsByTagName('object')[0];                    vizElement.style.width='100%';vizElement.style.height=(divElement.offsetWidth*0.75)+'px';                    var scriptElement = document.createElement('script');                    scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';                    vizElement.parentNode.insertBefore(scriptElement, vizElement);                </script>
+    <p class="w3-center">Days Ozone Norm Map</p>
+    <div class='tableauPlaceholder' id='viz1544391619949' style='position: relative'><noscript><a href='#'><img alt=' ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Ca&#47;CancerMaps&#47;DaysOzoneNorm&#47;1_rss.png' style='border: none' /></a></noscript><object class='tableauViz'  style='display:none;'><param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> <param name='embed_code_version' value='3' /> <param name='site_root' value='' /><param name='name' value='CancerMaps&#47;DaysOzoneNorm' /><param name='tabs' value='no' /><param name='toolbar' value='yes' /><param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Ca&#47;CancerMaps&#47;DaysOzoneNorm&#47;1.png' /> <param name='animate_transition' value='yes' /><param name='display_static_image' value='yes' /><param name='display_spinner' value='yes' /><param name='display_overlay' value='yes' /><param name='display_count' value='yes' /></object></div>                <script type='text/javascript'>                    var divElement = document.getElementById('viz1544391619949');                    var vizElement = divElement.getElementsByTagName('object')[0];                    vizElement.style.width='100%';vizElement.style.height=(divElement.offsetWidth*0.75)+'px';                    var scriptElement = document.createElement('script');                    scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';                    vizElement.parentNode.insertBefore(scriptElement, vizElement);                </script>
+    <p class="w3-center">Days PM10 Norm Map</p>
+    <div class='tableauPlaceholder' id='viz1544391632491' style='position: relative'><noscript><a href='#'><img alt=' ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Ca&#47;CancerMaps&#47;DaysPM10Norm&#47;1_rss.png' style='border: none' /></a></noscript><object class='tableauViz'  style='display:none;'><param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> <param name='embed_code_version' value='3' /> <param name='site_root' value='' /><param name='name' value='CancerMaps&#47;DaysPM10Norm' /><param name='tabs' value='no' /><param name='toolbar' value='yes' /><param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Ca&#47;CancerMaps&#47;DaysPM10Norm&#47;1.png' /> <param name='animate_transition' value='yes' /><param name='display_static_image' value='yes' /><param name='display_spinner' value='yes' /><param name='display_overlay' value='yes' /><param name='display_count' value='yes' /></object></div>                <script type='text/javascript'>                    var divElement = document.getElementById('viz1544391632491');                    var vizElement = divElement.getElementsByTagName('object')[0];                    vizElement.style.width='100%';vizElement.style.height=(divElement.offsetWidth*0.75)+'px';                    var scriptElement = document.createElement('script');                    scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';                    vizElement.parentNode.insertBefore(scriptElement, vizElement);                </script>
+    <p class="w3-center">Days PM2.5 Norm Map</p>
+    <div class='tableauPlaceholder' id='viz1544391643001' style='position: relative'><noscript><a href='#'><img alt=' ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Ca&#47;CancerMaps&#47;DaysPM2_5Norm&#47;1_rss.png' style='border: none' /></a></noscript><object class='tableauViz'  style='display:none;'><param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> <param name='embed_code_version' value='3' /> <param name='site_root' value='' /><param name='name' value='CancerMaps&#47;DaysPM2_5Norm' /><param name='tabs' value='no' /><param name='toolbar' value='yes' /><param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Ca&#47;CancerMaps&#47;DaysPM2_5Norm&#47;1.png' /> <param name='animate_transition' value='yes' /><param name='display_static_image' value='yes' /><param name='display_spinner' value='yes' /><param name='display_overlay' value='yes' /><param name='display_count' value='yes' /></object></div>                <script type='text/javascript'>                    var divElement = document.getElementById('viz1544391643001');                    var vizElement = divElement.getElementsByTagName('object')[0];                    vizElement.style.width='100%';vizElement.style.height=(divElement.offsetWidth*0.75)+'px';                    var scriptElement = document.createElement('script');                    scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';                    vizElement.parentNode.insertBefore(scriptElement, vizElement);                </script>
+    <p class="w3-center">Days SO2 Norm Map</p>
+    <div class='tableauPlaceholder' id='viz1544391653044' style='position: relative'><noscript><a href='#'><img alt=' ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Ca&#47;CancerMaps&#47;DaysSO2Norm&#47;1_rss.png' style='border: none' /></a></noscript><object class='tableauViz'  style='display:none;'><param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> <param name='embed_code_version' value='3' /> <param name='site_root' value='' /><param name='name' value='CancerMaps&#47;DaysSO2Norm' /><param name='tabs' value='no' /><param name='toolbar' value='yes' /><param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Ca&#47;CancerMaps&#47;DaysSO2Norm&#47;1.png' /> <param name='animate_transition' value='yes' /><param name='display_static_image' value='yes' /><param name='display_spinner' value='yes' /><param name='display_overlay' value='yes' /><param name='display_count' value='yes' /></object></div>                <script type='text/javascript'>                    var divElement = document.getElementById('viz1544391653044');                    var vizElement = divElement.getElementsByTagName('object')[0];                    vizElement.style.width='100%';vizElement.style.height=(divElement.offsetWidth*0.75)+'px';                    var scriptElement = document.createElement('script');                    scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';                    vizElement.parentNode.insertBefore(scriptElement, vizElement);                </script>
+    <div class="w3-content" style="max-width:900px">
+        <p>The map was able to show specific county’s cancer incidence rates, along with their average air and water quality. Since it was hard to determine significant patterns based on the map, a simple network was created in which counties were connected based on having the same cancer incidence rates. The goal of this network was to visually inspect air quality similarities in clusters of counties that had the same air quality.</p>
+        <p>Two networks were constructed: a network showing all counties, and a network showing just the counties in California. The nodes were colored based on the average proportion of good air quality days each county had. Red nodes had an average of 0-20% of days a year with good air quality, Blue nodes had an average of 20-60% of days a year with good air quality, and Green nodes had an average of 60-100% of days a year with good air quality. The All County Network displayed two distinct clusters, but the clusters were not unique to air quality. Therefore, a second network was created to see if clustering was significant in a particular state. Since California appeared to have some interesting patterns based on some past analysis, the counties from California were chosen for the nodes in the second network.</p>
+        <p>The California network resulted in two clear clusters, one cluster with cancer rates in the 25-50% quartile and one with cancer rates in the 50-75% quartile. The clustering coefficient was 1.0, which is due to the fact that each county was connected to counties with the same cancer incidence. There were 31 counties connected in one cancer cluster, and 20 counties connected in the other. The density of this network was 0.51, since each county is connected to approximately half of the other counties. Based on the clusters, there is no clear relationship between the number of good air quality days and the cancer incidence rate in California, similar to the All County Network. The network analysis helped to visualize the cancer and air quality trends in the United States and California. An interesting prospect for future study would be to create networks for all 50 states to see if there are particular states that show clear clusters based on air quality and cancer incidence rates.</p>
+      <div class="w3-center" style="max-width:900px">
+        <img src="/ANLY501/images/All_county_network.png" class="w3-image w3-padding-32 w3-center" width="600" height="650" onclick="onClick(this)" alt="Network of all counties."><br>
+        <i>Network of all counties.</i><br>
+      </div>
+      <div class="w3-center" style="max-width:900px">
+        <img src="/ANLY501/images/network_cali.png" class="w3-image w3-padding-32 w3-center" width="600" height="650" onclick="onClick(this)" alt="California Network."><br>
+        <i>California Network.</i>
+      </div>
+      <p>To see if the assumptions gathered visually from the network analysis were correct, three cluster analysis were conducted to explore groups of counties that may share similar overall cancer rates, water qualities and air qualities: Hierarchical Clustering, Partition Clustering and dbscan Clustering.</p>
+      <div class="w3-center" style="max-width:900px">
+        <img src="/ANLY501/images/Figure_1.png" class="w3-image w3-padding-32 w3-center" width="600" height="650" onclick="onClick(this)" alt="Hierarchical Clustering Dendogram.">
+      </div>
+      <div class="w3-center" style="max-width:900px">
+        <img src="/ANLY501/images/Figure_2.png" class="w3-image w3-padding-32 w3-center" width="600" height="650" onclick="onClick(this)" alt="Visual depiction of the 4 clusters created in hierarchical cluster analysis."><br>
+        <i>Visual depiction of the 4 clusters created in hierarchical cluster analysis.</i>
+      </div>
+      <p>The hierarchical clustering analysis shows that counties that are in the same cluster tend to have different cancer rate. In other words, counties that share similar environmental factors (in this case water and air quality) are likely to have different cancer rates.</p>
+      <div class="w3-center" style="max-width:900px">
+        <img src="/ANLY501/images/Figure_3.png" class="w3-image w3-padding-32 w3-center" width="600" height="650" onclick="onClick(this)" alt="A visual depiction of KMeans cluster analysis."><br>
+        <i>A visual depiction of KMeans cluster analysis.</i>
+      </div>
+      <p>Unlike the hierarchical clustering, KMeans clustering clustered counties with a relatively low cancer rate together. However, the silhouette score was lower than the hierarchal, which suggests that KMeans is not a good algorithm to use for this data.</p>
+      <div class="w3-center" style="max-width:900px">
+        <img src="/ANLY501/images/Figure_4.png" class="w3-image w3-padding-32 w3-center" width="600" height="650" onclick="onClick(this)" alt="A visual depiction of dbScan cluster analysis."><br>
+        <i>A visual depiction of dbScan cluster analysis.</i>
+      </div>
+      <p>This method has detected a pattern that the other two have not detected. However, there is no apparent meaningful interpretation for this pattern.</p>
+      <p>In conclusion, the clustering analysis confirmed our visual interpretation of the data in that counties with similar air and water quality are likely to have different cancer rates. This suggests that there may be other factors other than air and water quality that may be affecting cancer rates in the US. In order to detect clearer and more meaningful pattern, one should collect a larger dataset or include more factors such as county income and health insurance.</p>
+    </div>
+  </div>
+
+ 
+   <!-- Conclusion -->
+  <div class="w3-container w3-dark-grey w3-text-light-grey w3-padding-32 w3-padding-large" id="conclusion">
+    <div class="w3-content" style="max-width:600px">
+      <h4 class="w3-center"><b>Conclusion</b></h4>
+      <p>Air quality seems to be a better predictor than water quality of cancer trends in the United States based on machine learning and regression models. One explanation for this is that it is much easier to avoid drinking county water than it is to breathe county air, and therefore air quality will provide a more reliable prediction of cancer rates.</p>
+      <p>However, based on the visualizations and network analysis, there are no obvious cancer trends that can be predicted based on air quality in the United States. While the initial analysis of the water quality, air quality and cancer data in the United States provided substantial, important information to be used in further and final analysis, the question “Where should you live for your health?” can clearly not be answered with just air and water quality data. The good news for most people considering moving to major US cites is that these cities have generally good air and water quality.  Therefore, it could be useful to see this nation in context of other nations, particularly those that are still developing. The results of the tests performed indicate that air quality might be a better predictor of cancer rates than water, but further analysis on specific types of pollutants, as well as causes of pollution (i.e. power plants, landfills, etc) should also be conducted.</p>
+    </div>
+  </div> 
+
+  <!-- Footer -->
+  <footer class="w3-container w3-padding-32 w3-grey">  
+    <p>Site layout based on w3 template and modified by group.</p>
+  </footer>
+  
+
+<!-- End page content -->
+</div>
+
+<script>
+// Script to open and close sidebar
+function w3_open() {
+    document.getElementById("mySidebar").style.display = "block";
+    document.getElementById("myOverlay").style.display = "block";
+}
+ 
+function w3_close() {
+    document.getElementById("mySidebar").style.display = "none";
+    document.getElementById("myOverlay").style.display = "none";
+}
+
+// Modal Image Gallery
+function onClick(element) {
+  document.getElementById("img01").src = element.src;
+  document.getElementById("modal01").style.display = "block";
+  var captionText = document.getElementById("caption");
+  captionText.innerHTML = element.alt;
+}
+
+</script>
+
+
+</body>
+</html>
