@@ -14,22 +14,22 @@ body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
 
 <!-- Sidebar/menu -->
 <nav class="w3-sidebar w3-bar-block w3-white w3-animate-left w3-text-grey w3-collapse w3-top w3-center" style="z-index:3;width:300px;font-weight:bold" id="mySidebar"><br>
-  <h3 class="w3-center"><b>Mini-Project</b></h3>
-  <h5 class="w3-center">Melissa Collier, Norman Hong, Jingjing Lin, Yeqing Liu,<br> Xiner Ning, Arshia Singh</h5>
+  <h3 class="w3-center"><b>M.S. Analytics Admissions Analysis</b></h3>
+  <h5 class="w3-center">as4375 Scholarship Application</h5>
   <br><br><br>
   <a href="javascript:void(0)" onclick="w3_close()" class="w3-bar-item w3-button w3-padding w3-hide-large">CLOSE</a>
   <a href="#" onclick="w3_close()" class="w3-bar-item w3-button">Introduction</a>
-  <a href="#clean" onclick="w3_close()" class="w3-bar-item w3-button">Data Collection, Cleaning, & Normalization</a>
-  <a href="#hyp" onclick="w3_close()" class="w3-bar-item w3-button">Hypotheses</a>
-  <a href="#h1" onclick="w3_close()" class="w3-bar-item w3-button">Results: Hypothesis 1</a>
-  <a href="#h2" onclick="w3_close()" class="w3-bar-item w3-button">Results: Hypothesis 2</a>
-  <a href="#h3" onclick="w3_close()" class="w3-bar-item w3-button">Results: Hypothesis 3</a>
-  <a href="#conclusion" onclick="w3_close()" class="w3-bar-item w3-button">Conclusion</a>
+  <a href="#clean" onclick="w3_close()" class="w3-bar-item w3-button">Data Exploration</a>
+  <a href="#hyp" onclick="w3_close()" class="w3-bar-item w3-button">Hypothesis</a>
+  <a href="#h1" onclick="w3_close()" class="w3-bar-item w3-button">Results: Logistic Regression</a>
+  <a href="#h2" onclick="w3_close()" class="w3-bar-item w3-button">Results: Decision Tree</a>
+  <a href="#h3" onclick="w3_close()" class="w3-bar-item w3-button">Results: Naive Bayes</a>
+  <a href="#conclusion" onclick="w3_close()" class="w3-bar-item w3-button">Conclusion & Future Areas of Work</a>
 </nav>
 
 <!-- Top menu on small screens -->
 <header class="w3-container w3-top w3-hide-large w3-white w3-xlarge w3-padding-16">
-  <span class="w3-left w3-padding">Where should you live for your health?</span>
+  <span class="w3-left w3-padding">M.S. Analytics Admissions Analysis</span>
   <a href="javascript:void(0)" class="w3-right w3-button w3-white" onclick="w3_open()">☰</a>
 </header>
 
@@ -46,7 +46,7 @@ body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
   <div class="w3-container w3-dark-grey w3-text-light-grey w3-padding-32 w3-padding-large" id="#">
     <div class="w3-content" style="max-width:600px">
       <h4 class="w3-center"><b>Introduction</b></h4>
-      <p>This is an investigation into how an individual’s choice in residence may impact their health. Cancer rates are the main parameter to determine the overall health of each county in the United States. Cancer is currently the second leading cause of death in the nation, the causes of which have been linked to many poor health choices, including environmental factors, making it a very good indicator of the health of populations.  A dataset from the NIH that includes cancer type, demographic information, and location for each across the United States is used for this analysis. Two additional datasets describe the environmental status of each county in the United States. Air quality datasets were gathered from the Environmental Protection Agency that shows air quality indexes for common air pollutants such as NO2, O3, and CO. Additionally, a water quality dataset was gathered from the Center for Disease Control (CDC) to observe the heavy metal contaminants in the drinking water sources for each county. These three datasets can describe a basic picture of each US County’s environment, and how this environment might be correlated with cancer rates.</p>
+      <p>This is an investigation into whether or not we can predict if a student will receive an offer of admission based on the student data provided: GPA, GRE, TOEFL, Major, College Region, College Name, State, Domestic/International status, and Gender. </p>
     </div>
   </div>
 
@@ -62,25 +62,19 @@ body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
   <!-- Data Cleaning and Normalization -->
   <div class="w3-container w3-light-grey w3-padding-32 w3-padding-large" id="clean">
     <div class="w3-content" style="max-width:900px">
-      <h4 class="w3-center"><b>Data Collection, Cleaning, & Normalization</b></h4>
-      <p>Cancer rates across the United States were obtained through an NIH dataset. The datawas relatively clean but some edits were made for analysis.   Symbols that existed in some columns were converted to nan values, the index column was removed, and the “County” column was broken into four separate columns: State, County, SEER Registry Number, and NPCR Registry Number. Additionally, all the numerical columns that were imported as strings were removed and converted to numeric values for analysis.</p>
-	  <p>In the histogram below ‘Average Annual Count’ shows a few hundred observations having average annual count of more than 2500, which are possibly outliers. In order to confirm whether these observations are outliers, a subset from cancer data with an average annual count of more than 2500 was created. A large number of such observations are from California, New York and so on. All other variables were normal. Therefore, these variables were not removed as they could contain valuable information in analysis.</p>
-	  <div class="w3-center" style="max-width:900px">
-        <img src="/ANLY501/images/clean1.png" class="w3-image w3-padding-32 w3-center" width="600" height="650" onclick="onClick(this)" alt="Average Annual Count">
+      <h4 class="w3-center"><b>Data Exploration</b></h4>
+      <div class='tableauPlaceholder' id='viz1558405903690' style='position: relative'><noscript><a href='#'><img alt=' ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;st&#47;students_15582965441960&#47;worldmap&#47;1_rss.png' style='border: none' /></a></noscript><object class='tableauViz'  style='display:none;'><param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> <param name='embed_code_version' value='3' /> <param name='site_root' value='' /><param name='name' value='students_15582965441960&#47;worldmap' /><param name='tabs' value='no' /><param name='toolbar' value='yes' /><param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;st&#47;students_15582965441960&#47;worldmap&#47;1.png' /> <param name='animate_transition' value='yes' /><param name='display_static_image' value='yes' /><param name='display_spinner' value='yes' /><param name='display_overlay' value='yes' /><param name='display_count' value='yes' /><param name='filter' value='publish=yes' /></object></div>                <script type='text/javascript'>                    var divElement = document.getElementById('viz1558405903690');                    var vizElement = divElement.getElementsByTagName('object')[0];                    vizElement.style.width='100%';vizElement.style.height=(divElement.offsetWidth*0.75)+'px';                    var scriptElement = document.createElement('script');                    scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';                    vizElement.parentNode.insertBefore(scriptElement, vizElement);                </script>
+      <p>Here we can see that Applications for the Analytics program come from all over the world! A majority of these are clearly from the United States and China, which means that location at the national level will likely not be a major factor in determining whether a student will receive an offer of admission, compared to the overall domestic/international status of the student. Since there is stat level information included in the data we can also visualize where domestic applications come from:</p>
+      <div class='tableauPlaceholder' id='viz1558406469117' style='position: relative'><noscript><a href='#'><img alt=' ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;6N&#47;6NJXZZQWB&#47;1_rss.png' style='border: none' /></a></noscript><object class='tableauViz'  style='display:none;'><param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> <param name='embed_code_version' value='3' /> <param name='path' value='shared&#47;6NJXZZQWB' /> <param name='toolbar' value='yes' /><param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;6N&#47;6NJXZZQWB&#47;1.png' /> <param name='animate_transition' value='yes' /><param name='display_static_image' value='yes' /><param name='display_spinner' value='yes' /><param name='display_overlay' value='yes' /><param name='display_count' value='yes' /></object></div>                <script type='text/javascript'>                    var divElement = document.getElementById('viz1558406469117');                    var vizElement = divElement.getElementsByTagName('object')[0];                    vizElement.style.width='100%';vizElement.style.height=(divElement.offsetWidth*0.75)+'px';                    var scriptElement = document.createElement('script');                    scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';                    vizElement.parentNode.insertBefore(scriptElement, vizElement);                </script>
+      <p>There are a lot of applications from California, which could also be due to the fact that California is a high population state. As I state in the further work section, it could be useful to normalize these values by population to paint a more accurate portrait of potential outlier states, rather than emphasizing high population states. Next, we'll see if these locations play any role in admission rates:</p>
+      <div class='tableauPlaceholder' id='viz1558406203425' style='position: relative'><noscript><a href='#'><img alt=' ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;st&#47;students_15582965441960&#47;admitrates&#47;1_rss.png' style='border: none' /></a></noscript><object class='tableauViz'  style='display:none;'><param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> <param name='embed_code_version' value='3' /> <param name='site_root' value='' /><param name='name' value='students_15582965441960&#47;admitrates' /><param name='tabs' value='no' /><param name='toolbar' value='yes' /><param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;st&#47;students_15582965441960&#47;admitrates&#47;1.png' /> <param name='animate_transition' value='yes' /><param name='display_static_image' value='yes' /><param name='display_spinner' value='yes' /><param name='display_overlay' value='yes' /><param name='display_count' value='yes' /><param name='filter' value='publish=yes' /></object></div>                <script type='text/javascript'>                    var divElement = document.getElementById('viz1558406203425');                    var vizElement = divElement.getElementsByTagName('object')[0];                    vizElement.style.width='100%';vizElement.style.height=(divElement.offsetWidth*0.75)+'px';                    var scriptElement = document.createElement('script');                    scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';                    vizElement.parentNode.insertBefore(scriptElement, vizElement);                </script>
+	  <p>Here we can see that admit rates do vary a lot between domestic and international applicants; domestic applicants were more than 1.5 times more likely to receive offers of admission compared to their international peers. Let's see if this extends to gender:</p>
+    <div class='tableauPlaceholder' id='viz1558407857670' style='position: relative'><noscript><a href='#'><img alt=' ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;st&#47;students_15582965441960&#47;gender&#47;1_rss.png' style='border: none' /></a></noscript><object class='tableauViz'  style='display:none;'><param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> <param name='embed_code_version' value='3' /> <param name='site_root' value='' /><param name='name' value='students_15582965441960&#47;gender' /><param name='tabs' value='no' /><param name='toolbar' value='yes' /><param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;st&#47;students_15582965441960&#47;gender&#47;1.png' /> <param name='animate_transition' value='yes' /><param name='display_static_image' value='yes' /><param name='display_spinner' value='yes' /><param name='display_overlay' value='yes' /><param name='display_count' value='yes' /></object></div>                <script type='text/javascript'>                    var divElement = document.getElementById('viz1558407857670');                    var vizElement = divElement.getElementsByTagName('object')[0];                    vizElement.style.width='100%';vizElement.style.height=(divElement.offsetWidth*0.75)+'px';                    var scriptElement = document.createElement('script');                    scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';                    vizElement.parentNode.insertBefore(scriptElement, vizElement);                </script>
+      <p>Here we can see that there isn't much of a difference between the admit rates of males and females, although females are slightly more likely to apply and are also admitted at higher rates. Next let's take a look at the distribution of numeric values in the dataset:</p>
+      <div class="w3-center" style="max-width:900px">
+        <img src="/mini-project/images/dist.jpg" class="w3-image w3-padding-32 w3-center" width="600" height="650" onclick="onClick(this)" alt="Distribution of GPA, GRE, and TOEFL scores">
       </div>
-      <p>Air quality scores were obtained from the Environmental Protection Agency for each county in the United States. This data was also relatively clean but edits were made for the purpose of analysis.</p>
       <p>In order to join this dataset with other datasets, the FIPS county and state codes were added to this data frame. To do this, each county string was cleaned to match with the county string in the FIPS county code data frame so that the county and state codes could be easily added. There were no null values that needed to be removed, although outliers were present and discussed below.</p>
-      <p>Next, the numerical values were normalized into proportions. Since the Air Quality Index was not recorded for the same amount of days for every county, the “Good”, “Moderate”, “Unclean”, etc days columns needed to be divided by the number of days AQI was recorded (“Days with AQI”), so that these records could be compared to each other.  This also applied to the “Days CO2”, “Days O3” etc. columns, in which the pollutant mentioned was the primary pollutant for the number of days specified. These columns were added to the data frame as “Previouscolumnname_Norm”. For example: “Good Days_Norm”.</p>
-      <p>When checking for outliers in the numerical data of the air dataset, many outliers were found by using boxplots. The 'Good Days_Norm', 'Moderate Days_Norm',  ‘Unhealthy for Sensitive Groups Days_Norm’, Unhealthy Days_Norm”, ‘Very Unhealthy Days_Norm’, ‘Hazardous Days_Norm’ and 'Max AQI' all showed outliers, but for each column except ‘Max AQI” these outliers were left and deemed “extremes” for each column.  However, as the “Max AQI columns contained values above 500, which is the max AQI score, these records were completely removed from the data frame (Figure 2).</p>
-      <div class="w3-center" style="max-width:900px">
-        <img src="/ANLY501/images/clean2.png" class="w3-image w3-padding-32 w3-center" width="600" height="650" onclick="onClick(this)" alt="Boxplot grouped by Year">
-      </div>
-      <p>Water quality data for each county was collected through data from the Center for Disease Control. This dataset was relatively clean, but edits were made for the purpose of analysis. The “Location” column was split into a “county” and a “state” column.  Additionally, columns such as “geoAbbreviation” and “geoID” were redundant and only one was kept.  The water quality mean was also binned into 3 categories: “No pollution detected”, “detected but no harm”, and “detected and harmful.” After cleaning, the “result” data frame was used for analysis and contained only 6 columns with pertinent information for analysis. Overall, there were no missing values found after checking each column with .isna(), value_counts and unique() functions in the original dataset during Part 1 data processing stage.</p>
-      <p>For the water quality dataset, there is only one numeric column: ‘value’ (level of Arsenic concentration). According to the CDC’s documents, lowering the minimum contaminant load (MCL) from 50 to 10 ppb statistically reduces bladder and lung cancer mortality and morbidity by 37-56 cancers a year in the U.S. (EPA 2001b). Therefore, outliers can not be examined and defined only by applying boxplot function (left in Figure 3).  Though there are some points out side of the IQR box, but they should not be considered outliers, because there are many zeros in the dataset and these zeros cause the IQR lie at the bottom. Therefore, these points should be considered normal points within a reasonable range. As a second way to test for outliers, ‘Values’ were binned into three groups, and a histogram created to show the frequency of each group. The results of the two figures indicate that there were no outliers in the water quality dataset.</p>
-      <p>Finally, some values in the dataset were binned to assist with analysis. As mentioned before, the level of Arsenic concentration (water quality indicator) was binned into three groups: “No pollution detected”, “detected but no harm”, and “detected and harmful” by considering the CDC official guide (right in Figure 3). For examining this new binned column, “sum([the binned column]).isna())” code was applied, showing a result of “0”.  Therefore, there were no missing values binned.</p>
-      <div class="w3-center" style="max-width:900px">
-        <img src="/ANLY501/images/clean3.png" class="w3-image w3-padding-32 w3-center" width="600" height="650" onclick="onClick(this)" alt="MCL Value Data">
-      </div>
     </div>
   </div>
   
@@ -88,24 +82,25 @@ body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
   <div class="w3-container w3-grey w3-padding-32 w3-padding-large" id="hyp">
     <div class="w3-content" style="max-width:900px">
       <h4 class="w3-center"><b>Hypotheses</b></h4>
-      <p>Hypothesis 1</p>
-      <p>“We expect that as air quality gets worse, the cancer rates in each county will increase.  We also expect this effect to be most significant among lung cancer rates.”</p>
-      <p>Hypothesis 2</p>
-      <p>“We expect that as water quality decreases, cancer rates in each county will increase.”</p>
-      <p>Hypothesis 3</p>
-      <p>“The air and water quality scores in each county can be used as predictors for that specific county’s cancer rate (the average number of individuals affected with cancer in each county over a five year period).”</p>
+      <p>Hypothesis</p>
+      <p>“We can use the variables in this provided dataset to determine whether a student will receive an offer of admission.”</p>
+      <p>Method 1: Logistic Regression</p>
+      <p>With this method I was able to predict admission rates with 46% accuracy.</p>
+      <p>Method 2: Decision Tree</p>
+      <p>With this method I was able to predict admission rates with 49% accuracy.</p>
+      <p>Method 3: Naive Bayes</p>
+      <p>With this method I was able to predict admission rates with 85% accuracy.</p>
     </div>
   </div>
 
   <!-- Hypothesis 1 -->
   <div class="w3-container w3-light-grey w3-padding-32 w3-padding-large" id="h1">
     <div class="w3-content" style="max-width:900px">
-        <h4 class="w3-center"><b>Hypothesis 1</b></h4>
-        <p class="w3-center">“We expect that as air quality gets worse, the cancer rates in each county will increase.  We also expect this effect to be most significant among lung cancer rates.”</p>
+        <h4 class="w3-center"><b>Method 1: Logistic Regression</b></h4>
+        <p>This method was not particularly useful for prediction, but did provide some interesting insights on which variables were useful to this analysis. Here is the model:</p>
         <div class="w3-center" style="max-width:900px">
-        <img src="/ANLY501/images/scatter.png" class="w3-image w3-padding-32 w3-center" width="600" height="650" onclick="onClick(this)" alt="Lung Cancer Counts by AQI Score">
-      </div>
-        <p>The overall trend in the United States shows that as the median AQI score increases (air quality gets worse) the cancer rates also increase. However, there are some unique outliers that show low cancer rates in counties with very high AQI scores.  From these results, it is possible that type of pollutant might matter when examining cancer rates realted to air quality scores, as well as the population of the county. For example, the two-circled counties have similar air quality, but their average lung cancer counts are very different. It turns out the one at the bottom is Tulare County, which is ranked the sixth most ozone-polluted county in the US. So people are more likely to get lung cancer. The one at the top is Los Angeles County.  Additionally, the reason that LA county seems to have higher average lung cancer counts is LA County has 20 times more population than that of Tulare county. If a normalized lung cancer rate is calculated by dividing the cancer counts by the population, lung cancer count per person for Tulare County is 0.01% higher.</p>
+        <img src="/mini-prject/images/logres_offer_var.jpg" class="w3-image w3-padding-32 w3-center" width="600" height="650" onclick="onClick(this)" alt="Distribution of GPA, GRE, and TOEFL scores">
+        </div>
         <p>In contrast with this theory however, the following is a bar plot that compares the number of days with particulate matter less than 10 micrometers but above 2.5 micrometers, number of days with particulate matter less than 2.5 micrometers, and the age adjusted cancer incidence rate per 1,000,000 cases, for each state. The figure shows that even for large variations in the number of days with particulate matter smaller than 10 or 2.5 micrometers, the age adjusted incidence rate does not fluctuate much. It seems that the cancer rate is relatively the same across multiple states.</p>
         <iframe src = "/ANLY501/images/bar_plot1.html" width = "900" height = "700">
          Sorry your browser does not support inline frames.
@@ -207,14 +202,16 @@ body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
   <div class="w3-container w3-dark-grey w3-text-light-grey w3-padding-32 w3-padding-large" id="conclusion">
     <div class="w3-content" style="max-width:600px">
       <h4 class="w3-center"><b>Conclusion</b></h4>
-      <p>Air quality seems to be a better predictor than water quality of cancer trends in the United States based on machine learning and regression models. One explanation for this is that it is much easier to avoid drinking county water than it is to breathe county air, and therefore air quality will provide a more reliable prediction of cancer rates.</p>
-      <p>However, based on the visualizations and network analysis, there are no obvious cancer trends that can be predicted based on air quality in the United States. While the initial analysis of the water quality, air quality and cancer data in the United States provided substantial, important information to be used in further and final analysis, the question “Where should you live for your health?” can clearly not be answered with just air and water quality data. The good news for most people considering moving to major US cites is that these cities have generally good air and water quality.  Therefore, it could be useful to see this nation in context of other nations, particularly those that are still developing. The results of the tests performed indicate that air quality might be a better predictor of cancer rates than water, but further analysis on specific types of pollutants, as well as causes of pollution (i.e. power plants, landfills, etc) should also be conducted.</p>
+      <p>In this case I was able to predict whether a student would receive an offer of admission with about 85% accuracy using the variables GPA, GRE, TOEFL, Major, Domestic/International status, and Gender.</p>
+      <p>However, there is still a lot of future work to be done. The location data was very messy and included misspelled states and incorrect geography levels (e.g. Latin America under region, while all others were nations.) In the future it would be more useful to have standardized college names and locations and potentially use approimate Latitutde/Longitude to facilitate better use of this geographic data in both visualization and analysis. Even with the current geographic data, it could be helpful to normalize the number of applications by population - this would help place areas like China and California application rates in the context of their region. It would also be useful to collect all of this data over time, so that there is more information to model with; it would also enable us to conduct longitudinal analyses to see how the admissions landscape has changed over time.</p>
+      <p>In addition to the standardization of geographic data and additional years of data, I would advocate for the collection of new data. It would be helpful to have additional metrics such as a score (or even the raw text) of the student's admission essay. We know that the essay plays a large role in admissions and in this case there isn't any information on it for us to analyze. It would also be helpful to include metrics about whether the student attended information sessions or spoke with admissions officers, as this might indicate interest levels that could help us better understand how serious they are about their application and potentially even how likely they are to matriculate.</p>
+      <p>The codebase for this data is located <a href="https://github.com/arshiasingh/mini-project">here</a>.</p>
     </div>
   </div> 
 
   <!-- Footer -->
   <footer class="w3-container w3-padding-32 w3-grey">  
-    <p>Site layout based on w3 template and modified by group.</p>
+    <p>Site layout based on w3 template and modified by student.</p>
   </footer>
   
 

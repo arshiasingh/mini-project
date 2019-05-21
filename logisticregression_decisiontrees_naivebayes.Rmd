@@ -1,0 +1,129 @@
+---
+title: "Extra Credit HW"
+author: "Arshia Singh"
+date: "May 10, 2019"
+output: html_document
+---
+```{r}
+library(plyr)
+library(purrr)
+library(tidyr)
+library(ggplot2)
+library(corrplot)
+library(randomForest)
+library(pROC)
+library(e1071)
+library(tree)
+library(BayesTree)
+set.seed(123)
+```
+  
+```{r}
+ad <- read.csv("C:/Users/Arshia/Documents/Georgetown/mini-project/ScholarshipApplicationDataFilePretend.csv")
+ad <- ad[,-1]
+ad <- ad[,-7]
+ad <- ad[,-7]
+ad <- ad[,-6]
+
+ad.train <- sample(380, 0.9*380)
+ad.test <- ad[-ad.train,]
+ad.train <- ad[ad.train,]
+
+ind <- ad[, sample(.I, round(0.3*.N), FALSE),by="Major"]$V1
+train <- total_data[-ind,]
+test <- total_data[ind,]
+```
+
+  
+```{r}
+ad.train %>%
+  keep(is.numeric) %>% 
+  gather() %>% 
+  ggplot(aes(value)) +
+    facet_wrap(~ key, scales = "free") +
+    geom_histogram()
+```
+ 
+```{r}
+#Logistic Regression
+logres <- glm(Matriculating ~ ., data = ad.train, family = binomial)
+summary(logres)
+
+logpred <- predict(logres, ad.train, type = "response")
+logroc <- roc(ad.train$Matriculating ~ logpred)
+logroc <- as.data.frame(cbind(logroc$thresholds, logroc$sensitivities, logroc$specificities))
+logroc <- logroc[logroc$V2 < 0.822,]
+logroc <- logroc[logroc$V2 >= 0.821,]
+logroc <- logroc[logroc$V3 < 0.822,]
+logroc <- logroc[logroc$V3 >= 0.821,]
+logroc
+
+# threshold = 0.2703627, sensitivity = 0.8218339, specificity = 0.8218851
+logprobs <- predict(logres, ad.test, type = "response")
+logroc <- roc(ad.test$Matriculating ~ logprobs)
+#print("Sensitivity:")
+#logroc$sensitivities[logroc$threshold >= 0.821 & logroc$threshold < 0.822]
+#print("Specificity:")
+#logroc$specificities[logroc$threshold >= 0.821 & logroc$threshold < 0.822]
+
+logpred <- rep("NO", 39)
+logpred[logprobs > 0.2564959]="YES"
+table(logpred, ad.test$Matriculating)
+```
+
+```{r}
+#naive bayes
+nb <- naiveBayes(Matriculating ~ ., data = ad.train)
+
+# S3 method for naiveBayes
+nbpred <- predict(nb, ad.test, type = "class")
+table(nbpred, ad.test$Matriculating)
+```
+
+```{r}
+tree <- tree(Matriculating ~ ., data = ad.train)
+treepred <- predict(tree, ad.test, type = "class")
+table(treepred, ad.test$Matriculating)
+```
+
+
+ 
+```{r}
+#Logistic Regression
+logres <- glm(OfferOfAdmissionExtended ~ .-Matriculating, data = ad.train, family = binomial)
+summary(logres)
+
+logpred <- predict(logres, ad.train, type = "response")
+logroc <- roc(ad.train$OfferOfAdmissionExtended ~ logpred)
+logroc <- as.data.frame(cbind(logroc$thresholds, logroc$sensitivities, logroc$specificities))
+logroc
+
+# threshold = 0.5452909908, sensitivity = 0.81818182, specificity = 0.82608696
+logprobs <- predict(logres, ad.test, type = "response")
+logroc <- roc(ad.test$OfferOfAdmissionExtended ~ logprobs)
+#print("Sensitivity:")
+#logroc$sensitivities[logroc$threshold >= 0.821 & logroc$threshold < 0.822]
+#print("Specificity:")
+#logroc$specificities[logroc$threshold >= 0.821 & logroc$threshold < 0.822]
+
+logpred <- rep("NO", 39)
+logpred[logprobs > 0.5452909908]="YES"
+table(logpred, ad.test$OfferOfAdmissionExtended)
+```
+
+```{r}
+#naive bayes
+nb <- naiveBayes(OfferOfAdmissionExtended ~ .-Matriculating, data = ad.train)
+
+# S3 method for naiveBayes
+nbpred <- predict(nb, ad.test, type = "class")
+table(nbpred, ad.test$OfferOfAdmissionExtended)
+```
+
+```{r}
+tree <- tree(OfferOfAdmissionExtended ~ .-Matriculating, data = ad.train)
+treepred <- predict(tree, ad.test, type = "class")
+table(treepred, ad.test$OfferOfAdmissionExtended)
+plot(tree)
+text(tree)
+```
